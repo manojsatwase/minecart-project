@@ -2,14 +2,19 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoutes";
 
-
 import Loading from './components/Loading'; // Import your loading indicator component
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Error from "./pages/Error";
+// import Product from "../../backend/models/Product";
+
+import "./styles/app.scss";
 
 const Home = lazy(() => import('./pages/Home'));
 const Search = lazy(() => import('./pages/Search'));
 const Cart = lazy(()=> import('./pages/Cart'));
+const Product = lazy(() => import('./pages/Product'))
+const MyProfile = lazy(() => import('./pages/MyProfile'));
 
 // Import Daynamic Route
 // by default react load all component
@@ -18,6 +23,7 @@ const Dashboard = lazy(()=>import("./pages/Dashboard"));
 const Products = lazy(()=> import("./pages/Products"))
 const Customers = lazy(()=> import("./pages/Customers"));
 const Transaction = lazy(()=> import("./pages/Transaction"));
+
 
 // admin management
 const NewProduct = lazy(() => import("./pages/admin/management/Newproduct"));
@@ -59,11 +65,18 @@ export const appRouter = createBrowserRouter([
         path: "/",
         element: <LazyLoadingComponent component={Home} />
        },{
+        path: "/products/:id",
+        element: <LazyLoadingComponent component={Product} />
+       },
+       {
         path: "/search",
         element: <LazyLoadingComponent component={Search} />
        },{
         path: "/cart",
         element: <LazyLoadingComponent component={Cart} />
+       },{
+        path:"/myprofile",
+        element: <LazyLoadingComponent component={MyProfile} />
        },
       {
         element: <ProtectedRoute role="admin" />,

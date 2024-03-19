@@ -11,8 +11,8 @@ step 2 :-  design schema models
 step 3 : - routes 
    
    methods
-    post   localhost:5000/api/v1/users/login 
-    post   localhost:5000/api/v1/users/register
+    post   localhost:5000/api/v1/login 
+    post   localhost:5000/api/v1/register
     crud   localhost:5000/api/v1/products
 
 
