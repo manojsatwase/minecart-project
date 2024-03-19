@@ -47,7 +47,7 @@ const AppLayout = () => {
 
 const LazyLoadingComponent = ({ component: LazyComponent }) => {
   return (
-    <Suspense fallback={<Loading isLoading={false}/> } >
+    <Suspense fallback={<Loading isLoading={true}/> } >
       <LazyComponent />
     </Suspense> 
   );
