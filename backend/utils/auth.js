@@ -4,7 +4,7 @@ exports.authenticateUser = async(req,res) => {
     const {email,password} = req.body;
     try {
     
-        const user = await User.findOne({email});
+        let user = await User.findOne({email});
 
         if (!user) {
             return res.status(401).json({

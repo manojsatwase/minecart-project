@@ -15,8 +15,10 @@ app.use(express.urlencoded({extended:true}));
 
 // import routes
 
-const userController = require("./routes/userRoute");
-app.use("/api/v1",userController);
+const userRoute = require("./routes/userRoute");
+const productRoute = require("./routes/productsRoute");
+app.use("/api/v1",userRoute);
+app.use("/api/v1",productRoute)
 
 
 const PORT =  process.env.PORT || 5000;
