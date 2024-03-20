@@ -19,6 +19,8 @@ step 3 : - routes
     crud   localhost:5000/api/v1/products ✅
                          /api/v1/logout ✅
                          /api/v1/me load user when login customer ✅
+                         /api/v1/users ✅
+                        /api/v1/users/:id ✅
 
 
 step 4 controllers 
@@ -33,7 +35,6 @@ step 4 controllers
             updateProfile ✅
             updatedPassword ✅
 
-
  Authenticate User
   create product ✅
   delete product ✅
@@ -44,11 +45,16 @@ step 4 controllers
 
 
 
-frontend functionality
+Frontend Functionality
 
 npm i react-router-dom @reduxjs/toolkit react-redux ✅
 
 Basic Layout for our minecart application ✅
+
+Lazy Loading ✅
+Code Splitting ✅
+follow good practice for Folder Structure ✅
+
 
 components :=>
           Header ✅
@@ -59,7 +65,7 @@ components :=>
 user can see this pages
         Login  ✅
         Register ✅
-        Cart
+        Cart 
         search product => Debounce feature
         Error ✅
                 
@@ -80,7 +86,7 @@ admin management
      
      // use lazy suspend for dynamic load our components
 
-     Protected Route componet ✅
+     Protected Route components ✅
       admin 
       Owener  
       customer 
@@ -93,6 +99,14 @@ create slices for
  loginUser ✅
  registerUser ✅
  LogoutUser ✅
+
+packages install :
+   react router dom ✅ for routing
+   react-bootstrap ✅ for designing
+   react-alert ✅ for showing error messages
+   react-redux ✅ bride between ui and redux connect
+   @reduxjs/toolkit ✅
+
 
 
 
