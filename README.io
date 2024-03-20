@@ -21,14 +21,24 @@ step 2 :-  design schema models
 step 3 : - routes 
    
    methods
+users :-
     post      localhost:5000/api/v1/login  ✅
     post      localhost:5000/api/v1/register ✅
     crud      localhost:5000/api/v1/products ✅
     get       localhost:5000/api/v1/logout ✅
-    get       localhost:5000/api/v1/me load user when login customer ✅
+get/post      localhost:5000/api/v1/me load user when login customer ✅
     crud      localhost:5000/api/v1/users ✅
 delete/put    localhost:5000/api/v1/users/:id ✅
-get/post      localhost:5000/api/v1/product-type ✅
+post          localhost:5000/api/update-password
+
+Admin:
+  get        localhost:5000/api/admin/users
+
+ProductType :-
+get/post       localhost:5000/api/v1/product-type ✅
+get/put/delete localhost:5000/api/v1//product-types/:id ✅
+
+Vendors :-
 get/post      localhost:5000/api/v1/vendors ✅
 put/delete    localhost:5000/api/v1/vendors/:id ✅
 
