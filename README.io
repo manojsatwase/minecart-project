@@ -41,10 +41,12 @@ step 4 controllers
             getAllUsers ✅
             updateProfile ✅
             updatedPassword ✅
-      Admin Roles 
-       default customer
+      Admin Roles ["admin","owner"]
+       default roles "customer"
                admin
                owner
+    middleware restrictToAdmin 
+               protected route for products 
 
  Authenticate User
   create product ✅
