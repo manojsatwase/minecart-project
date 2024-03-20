@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Cookies from 'js-cookie';
 
@@ -40,11 +40,10 @@ const TransactionManagement = lazy(
 
 const AppLayout = () => {
   const dispatch = useDispatch();
-  const [token, setToken] = useState('');
+
   useEffect(() => {
     const authToken = Cookies.get('auth_token');
       if (authToken) {
-        console.log(authToken);
         setToken(authToken)
         dispatch(loadUserAPI());
       }
