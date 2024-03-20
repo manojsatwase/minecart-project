@@ -51,6 +51,7 @@ const Login = () => {
                   placeholder="Enter email"
                   value={email}
                   onChange={onChangeEmail}
+                  required
                 />
               </Form.Group>
 
@@ -64,6 +65,7 @@ const Login = () => {
                       placeholder="Password"
                       value={password}
                       onChange={onChangePassword}
+                      required
                     />
                   }
                 />
