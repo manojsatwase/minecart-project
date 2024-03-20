@@ -29,10 +29,10 @@ exports.register = async (req, res) => {
             }
         });
 
-        const token = await user.generateToken();
+        const token = await user.generateAuthToken();
           
         const options = {
-          expires:new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+          expires:new Date(Date.now() + 1 * 24 * 1 * 60 * 1000),
           httpOnly:true
         }
 

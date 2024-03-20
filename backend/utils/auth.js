@@ -36,3 +36,17 @@ exports.isAuthenticated = async (req, res, next) => {
         });
     }
 }
+
+
+// Middleware to restrict access to admin-only routes
+exports.restrictToAdmin = (req, res, next) => {
+    if (req.user.role !== 'admin' && req.user.role !== 'owner') {
+        return res.status(403).json({
+             message: 'You do not have permission to access this resource.' 
+         });
+    }
+
+    next();
+};
+
+
