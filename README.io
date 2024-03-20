@@ -21,14 +21,16 @@ step 2 :-  design schema models
 step 3 : - routes 
    
    methods
-    post   localhost:5000/api/v1/login  ✅
-    post   localhost:5000/api/v1/register ✅
-    crud   localhost:5000/api/v1/products ✅
-                         /api/v1/logout ✅
-                         /api/v1/me load user when login customer ✅
-                         /api/v1/users ✅
-                        /api/v1/users/:id ✅
-
+    post      localhost:5000/api/v1/login  ✅
+    post      localhost:5000/api/v1/register ✅
+    crud      localhost:5000/api/v1/products ✅
+    get       localhost:5000/api/v1/logout ✅
+    get       localhost:5000/api/v1/me load user when login customer ✅
+    crud      localhost:5000/api/v1/users ✅
+delete/put    localhost:5000/api/v1/users/:id ✅
+get/post      localhost:5000/api/v1/product-type ✅
+get/post      localhost:5000/api/v1/vendors ✅
+put/delete    localhost:5000/api/v1/vendors/:id ✅
 
 step 4 controllers 
   Protected Route 
@@ -45,7 +47,7 @@ step 4 controllers
        default roles "customer"
                admin
                owner
-    middleware restrictToAdmin 
+    middleware restrictToAdmin  ✅
                protected route for products 
 
  Authenticate User
