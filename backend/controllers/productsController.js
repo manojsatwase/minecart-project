@@ -101,3 +101,9 @@ exports.updateProducts =  async (req, res) => {
         })
     }
 }
+
+/*
+  if you're building an e-commerce application,
+  product types could be "Electronics," "Clothing," "Books," etc.
+*/
+
