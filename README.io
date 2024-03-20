@@ -1,3 +1,10 @@
+// How To Run Project
+Backend :-
+MineCart :- npm i 
+          npm start
+Frontend :- npm i 
+          npm run dev
+
 
 Backend functionality
 step 1 : Create Server and configure DB ✅
@@ -34,6 +41,10 @@ step 4 controllers
             getAllUsers ✅
             updateProfile ✅
             updatedPassword ✅
+      Admin Roles 
+       default customer
+               admin
+               owner
 
  Authenticate User
   create product ✅
@@ -58,6 +69,9 @@ follow good practice for Folder Structure ✅
 
 components :=>
           Header ✅
+          Carasol - Progress
+          Products Desplay - Progress
+          Shoping Cart Details - Progress 
           Footer
           Loading ✅
           ShowHidePassword feature ✅

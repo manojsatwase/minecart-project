@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <>
-      <MainScreen title="LOGIN">
+      <MainScreen title="Welcome Manoj">
         <Button variant="primary" onClick={handleShowModal}>
           Open Login Modal
         </Button>
