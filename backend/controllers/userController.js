@@ -1,31 +1,18 @@
 const User = require("../models/userModel");
-const isValidEmail = require("../utils/validators");
 
-exports.registerUser = async (req, res) => {
+const cloudinary = require("cloudinary");
+const { isValidEmail } = require("../utils/validators");
+
+exports.register = async (req, res) => {
     try {
-        const { username, avatar, email, password ,role} = req.body;
-
-        // Check if any required fields are missing
-        if (!username || !avatar || !email || !password || !role) {
-            return res.status(400).json({
-                success: false,
-                message: "Missing required fields"
-            });
-        }
-    
-        if(!isValidEmail(email)){
-            return res.status(404).json({
-               success:false,
-               message:"Email is not invalid"
-            })
-           }
-
-        // Check if the user already exists
-        const existingUser = await User.findOne({ email });
+        const { username,email,password,avatar } = req.body;
+      
+        // Check if user with the same email already exists
+        let existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({
                 success: false,
-                message: "User already exists"
+                message: "User with this email already exists"
             });
         }
 
@@ -34,28 +21,38 @@ exports.registerUser = async (req, res) => {
         });
 
         // Create a new user
-        const user = await User.create({ 
-            username, email, password,role,
+        const user = await User.create({
+            username,email,password,avatar,
             avatar: {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url
-        }});
-        const token = await user.getToken(); // Generate token for the new user
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url
+            }
+        });
 
-        res.status(201).json({
+        const token = await user.generateToken();
+          
+        const options = {
+          expires:new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+          httpOnly:true
+        }
+
+       // Return success response with the newly created user
+        res.status(201).cookie("token",token,options).json({
             success: true,
             message: "User registered successfully",
             token
         });
-    } catch (error) {
+ 
+    }catch(error){
         res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
+            success:false,
+            message:error.message
+        })
     }
-};
+}
 
-exports.loginUser = async (req,res) => {
+
+exports.login = async (req,res) => {
 
   try {
     const {email,password} = req.body;

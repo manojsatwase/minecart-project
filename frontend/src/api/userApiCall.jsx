@@ -1,6 +1,11 @@
 import { makeRequest,METHODS } from "./apiCall";
 
-import { LoadUserFailure, LoadUserRequest, LoadUserSuccess, LoginFailure, LoginRequest, LoginSuccess, logoutUserFailure, logoutUserRequest, logoutUserSuccess } from "../redux/slices/userSlice";
+import {
+     RegisterFailure, RegisterRequest, RegisterSuccess,
+     LoadUserFailure, LoadUserRequest, LoadUserSuccess,
+     LoginFailure, LoginRequest, LoginSuccess,
+     logoutUserFailure, logoutUserRequest, logoutUserSuccess,
+} from "../redux/slices/userSlice";
 
 
 export const loginUserAPI = (email, password) => async (dispatch) => {
@@ -9,23 +14,23 @@ export const loginUserAPI = (email, password) => async (dispatch) => {
         LoginRequest,
         LoginSuccess,
         LoginFailure,
-        "POST",
+        METHODS.POST,
         "/api/v1/login",
         { email, password }
     );
 };
 
-// export const registerUserAPI = (name,email,avatar,password) => async (dispatch) => {
-//     await makeRequest(
-//         dispatch,
-//         RegisterRequest,
-//         RegisterSuccess,
-//         RegisterFailure,
-//         METHODS.POST,
-//         "/api/v1/register",
-//         { name,email,avatar,password }
-//     );
-// };
+export const registerUserAPI = (username,email,password,avatar) => async (dispatch) => {
+    await makeRequest(
+        dispatch,
+        RegisterRequest,
+        RegisterSuccess,
+        RegisterFailure,
+        METHODS.POST,
+        "/api/v1/register",
+        { username,email,password,avatar }
+    );
+};
 
 export const loadUserAPI = () => async (dispatch) => {
     await makeRequest(
@@ -38,6 +43,16 @@ export const loadUserAPI = () => async (dispatch) => {
     );
 };
 
+export const logoutUserAPI =  () => async(dispatch) => {
+    await makeRequest(
+        dispatch,
+        logoutUserRequest,
+        logoutUserSuccess,
+        logoutUserFailure,
+        METHODS.GET,
+        "/api/v1/logout"
+    )
+}
 
 // export const getAllUsersAPI = (name = "") => async (dispatch) => {
 //     await makeRequest(
@@ -50,16 +65,7 @@ export const loadUserAPI = () => async (dispatch) => {
 //     );
 // };
 
-export const logoutUserAPI =  () => async(dispatch) => {
-    await makeRequest(
-        dispatch,
-        logoutUserRequest,
-        logoutUserSuccess,
-        logoutUserFailure,
-        METHODS.GET,
-        "/api/v1/logout"
-    )
-}
+
 
 
 // export const getUserProfileAPI = (id) => async (dispatch) => {

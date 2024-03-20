@@ -19,6 +19,7 @@ const Search = lazy(() => import('./pages/Search'));
 const Cart = lazy(()=> import('./pages/Cart'));
 const Product = lazy(() => import('./pages/Product'))
 const MyProfile = lazy(() => import('./pages/MyProfile'));
+const Register = lazy(()=> import('./pages/Register'));
 
 // Import Daynamic Route
 // by default react load all component
@@ -91,7 +92,10 @@ export const appRouter = createBrowserRouter([
        },{
         path:"/myprofile",
         element: <LazyLoadingComponent component={MyProfile} />
-       },
+       },{
+        path:"/register",
+        element:<LazyLoadingComponent component={Register} />
+      },
       {
         element: <ProtectedRoute role="admin" />,
         children: [
@@ -126,5 +130,5 @@ export const appRouter = createBrowserRouter([
         ],
       },
     ],
-  },
+  }
 ]);

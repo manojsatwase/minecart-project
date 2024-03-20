@@ -23,7 +23,7 @@ const userSlice = createSlice({
           state.isAuthenticated = false;
 
         },
-         RegisterRequest : (state) => {
+        RegisterRequest : (state) => {
             state.loading = true;
         },
         RegisterSuccess : (state, action) => {
