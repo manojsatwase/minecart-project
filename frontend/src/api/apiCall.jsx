@@ -20,7 +20,7 @@ export const makeRequest = async (dispatch, requestAction, successAction, failur
   try {
     dispatch(requestAction());
     let response;
-  
+
     switch (method.toUpperCase()) {
       case METHODS.GET:
         response = await axios.get(url);
@@ -35,7 +35,7 @@ export const makeRequest = async (dispatch, requestAction, successAction, failur
         response = await axios.patch(url, data, axiosOptions);
         break;
       case METHODS.DELETE:
-        response = await axios.delete(url, {data}, axiosOptions);
+        response = await axios.delete(url, { data }, axiosOptions);
         break;
       default:
         throw new Error(`Unsupported request method: ${method}`);
@@ -43,7 +43,7 @@ export const makeRequest = async (dispatch, requestAction, successAction, failur
 
     dispatch(successAction(response?.data));
   } catch (error) {
-    dispatch(failureAction(error.response?.data?.message)); 
+    dispatch(failureAction(error.response?.data?.message));
   }
 };
 

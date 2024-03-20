@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ShowHidePassword from '../components/ShowPasswordFeature/ShowHidePassword';
-import Loading from '../components/Loading';
 import MainScreen from '../components/MainScreen/MainScreen';
+import { loginUserAPI } from '../api/userApiCall';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+ 
+   const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const {loading} = useSelector(state => state?.userInfo);
+ 
   const onChangeEmail = (e) => setEmail(e.target.value);
   const onChangePassword = (e) => setPassword(e.target.value);
 
@@ -24,17 +24,9 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     // Your login logic goes here
-    // callLoginPostAPI(email, password);
+    dispatch(loginUserAPI(email, password));
   };
 
-  // useEffect for any side effects like redirecting after successful login
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate('/');
-  //   }
-  // }, [userInfo, navigate, dispatch]);
-
-  if (false) return <Loading />;
 
   return (
     <>
@@ -42,16 +34,15 @@ const Login = () => {
         <Button variant="primary" onClick={handleShowModal}>
           Open Login Modal
         </Button>
-
         <Modal show={showModal} onHide={handleCloseModal}>
           <Modal.Header>
             <Modal.Title>Login</Modal.Title>
             <Button onClick={handleCloseModal}>
-                <span>&times;</span>
+                &times;
              </Button>
           </Modal.Header>
           <Modal.Body>
-            {error && <div className="text-danger">{error}</div>}
+            {/* {error && <div className="text-danger">{error}</div>} */}
             <Form onSubmit={submitHandler}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
@@ -77,7 +68,7 @@ const Login = () => {
                   }
                 />
               </Form.Group>
-              <Button variant="primary" className='mt-3' type="submit">
+              <Button disabled={loading} variant="primary" className='mt-3' type="submit">
                 Submit
               </Button>
             </Form>

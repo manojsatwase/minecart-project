@@ -1,23 +1,38 @@
 import { useEffect, useState } from 'react';
 import { Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { capitalize,PICS} from '../utils/capitalize';
+import { logoutUserAPI } from '../api/userApiCall';
+import {useAlert} from "react-alert";
+import { clearErrors, clearMessage } from '../redux/slices/userSlice';
+import Loading from './Loading';
 
 const Header = () => {
   const [searchText,setSearchText] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  // const userInfo = useSelector(state=>state.createUser.userInfo);
   
+  const {error,message,loading,isAuthenticated} = useSelector(state=>state.userInfo);
+  const alert = useAlert();
   const Logout = () => {
-    removeUserToLocalStorage();
-    navigate("/");
+      dispatch(logoutUserAPI());
   }
 
   const onChangeHandler = ({target:{value}}) => {
     setSearchText(value)
   }
+
+  useEffect(()=>{
+      if(error){
+        alert.error(error)
+        dispatch(clearErrors());
+      }
+   if(message){
+    alert.success(message)
+    dispatch(clearMessage())
+   }
+  },[error,alert,dispatch,message])
+  
   useEffect(()=>{
       const timer = setTimeout(() => {
         // dispatch(searchProducts(searchText));
@@ -29,9 +44,10 @@ const Header = () => {
     }, [searchText,dispatch]);
 
     useEffect(()=>{
-      // dispatch(createProducts(getUserToLocalStorage()));
+      // dispatch(createProducts());
     },[dispatch]);
   
+    if(loading) return <Loading />
 
     return (
       <Navbar expand="lg" bg="primary" variant='dark' className="bg-body-tertiary">
@@ -59,12 +75,22 @@ const Header = () => {
               <Link to="/products/cart" className="nav-link cart-link">
                 <i className="bi bi-cart"></i>
               </Link>
-              <img src={PICS} className='userProfile' lazy="loading" alt='user' />
-              <NavDropdown className='mx-3' title={capitalize("manoj"?.name)} id="navbarScrollingDropdown"> 
-                <Link className='p-4' to="myprofile">My Profile</Link>
-                <NavDropdown.Divider />
-                <NavDropdown.Item onClick={Logout}>Logout</NavDropdown.Item>
-              </NavDropdown>
+              <Link to="/products" className="nav-link cart-link">
+                  products
+              </Link>
+              {
+                isAuthenticated &&(
+                  <>
+                    <img src={PICS} className='userProfile' lazy="loading" alt='user' />
+                    <NavDropdown className='mx-3' title={capitalize("manoj"?.name)} id="navbarScrollingDropdown"> 
+                      <Link className='p-4' to="/myprofile">My Profile</Link>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item onClick={Logout}>Logout</NavDropdown.Item>
+                    </NavDropdown>
+                  </>
+                )
+              }
+             
             </Navbar.Collapse>
           ) : (
             <Link className='ml-auto' to="/login">Login</Link>

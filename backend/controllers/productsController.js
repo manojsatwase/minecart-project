@@ -79,3 +79,25 @@ exports.updateProducts =  async (req, res) => {
     }
   }
   
+  exports.getAllProducts = async(req,res) => {
+    try {
+        // req.params.id => '/users/:id',
+        // req.query.name => '/users?name=${name}'
+        // req.body.name
+        // Make sure you have body-parser middleware installed 
+        //and included in your Express application.
+        const products = await Product.find({
+            name:{$regex:req.query.name,$options:"i"}
+        })
+
+        res.status(200).json({
+            success:true,
+            products
+        })
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            error:error.message
+        })
+    }
+}

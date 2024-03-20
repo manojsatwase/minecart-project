@@ -14,6 +14,7 @@ step 3 : - routes
     post   localhost:5000/api/v1/login 
     post   localhost:5000/api/v1/register
     crud   localhost:5000/api/v1/products
+                         /api/v1/logout
 
 
 step 4 controllers 

@@ -1,19 +1,6 @@
-import { makeRequest } from "./apiCall";
+import { makeRequest,METHODS } from "./apiCall";
 
-import { 
-    LoadUserFailure, 
-    LoadUserRequest, 
-    LoadUserSuccess, 
-    LoginFailure, 
-    LoginRequest, 
-    LoginSuccess,
-    logoutUserRequest,
-    logoutUserSuccess,
-    logoutUserFailure,
-    RegisterRequest,
-    RegisterSuccess,
-    RegisterFailure,
-} from "../redux/slice/userSlice";
+import { LoadUserFailure, LoadUserRequest, LoadUserSuccess, LoginFailure, LoginRequest, LoginSuccess, logoutUserFailure, logoutUserRequest, logoutUserSuccess } from "../redux/slices/userSlice";
 
 
 export const loginUserAPI = (email, password) => async (dispatch) => {
@@ -22,23 +9,23 @@ export const loginUserAPI = (email, password) => async (dispatch) => {
         LoginRequest,
         LoginSuccess,
         LoginFailure,
-        'POST',
+        "POST",
         "/api/v1/login",
         { email, password }
     );
 };
 
-export const registerUserAPI = (name,email,avatar,password) => async (dispatch) => {
-    await makeRequest(
-        dispatch,
-        RegisterRequest,
-        RegisterSuccess,
-        RegisterFailure,
-        'POST',
-        "/api/v1/register",
-        { name,email,avatar,password }
-    );
-};
+// export const registerUserAPI = (name,email,avatar,password) => async (dispatch) => {
+//     await makeRequest(
+//         dispatch,
+//         RegisterRequest,
+//         RegisterSuccess,
+//         RegisterFailure,
+//         METHODS.POST,
+//         "/api/v1/register",
+//         { name,email,avatar,password }
+//     );
+// };
 
 export const loadUserAPI = () => async (dispatch) => {
     await makeRequest(
@@ -46,22 +33,22 @@ export const loadUserAPI = () => async (dispatch) => {
         LoadUserRequest,
         LoadUserSuccess,
         LoadUserFailure,
-        'GET',
+        METHODS.GET,
         "/api/v1/me"
     );
 };
 
 
-export const getAllUsersAPI = (name = "") => async (dispatch) => {
-    await makeRequest(
-        dispatch,
-        usersRequest,
-        usersSuccess,
-        userFailure,
-        'GET',
-        `/api/v1/users?name=${name}`
-    );
-};
+// export const getAllUsersAPI = (name = "") => async (dispatch) => {
+//     await makeRequest(
+//         dispatch,
+//         usersRequest,
+//         usersSuccess,
+//         userFailure,
+//         METHODS.GET,
+//         `/api/v1/users?name=${name}`
+//     );
+// };
 
 export const logoutUserAPI =  () => async(dispatch) => {
     await makeRequest(
@@ -69,31 +56,20 @@ export const logoutUserAPI =  () => async(dispatch) => {
         logoutUserRequest,
         logoutUserSuccess,
         logoutUserFailure,
-        "GET",
+        METHODS.GET,
         "/api/v1/logout"
     )
 }
 
-export const getUserPostsAPI = (id) => async (dispatch) => {
-    await makeRequest(
-        dispatch, 
-        userPostsRequest,
-        userPostsSuccess,
-        userPostsFailure,
-        "GET",
-        `/api/v1/userposts/${id}`,
 
-    )
-}
-
-export const getUserProfileAPI = (id) => async (dispatch) => {
-    await makeRequest(
-         dispatch, 
-         userProfileRequest,
-         userProfileSuccess,
-         userProfileFailure,
-         "GET",
-        `/api/v1/user/${id}`, 
-    )
-}
+// export const getUserProfileAPI = (id) => async (dispatch) => {
+//     await makeRequest(
+//          dispatch, 
+//          userProfileRequest,
+//          userProfileSuccess,
+//          userProfileFailure,
+//          METHODS.GET,
+//         `/api/v1/user/${id}`, 
+//     )
+// }
 

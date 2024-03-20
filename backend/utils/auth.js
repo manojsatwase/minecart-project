@@ -1,37 +1,38 @@
 const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
-exports.authenticateUser = async(req,res) => {
-    const {email,password} = req.body;
-    try {
+/**
+ * Middleware to authenticate user requests using JWT tokens.
+ * Retrieves token from the Authorization header and verifies its validity.
+ * If token is valid, attaches user information to the request object.
+ * If token is missing or invalid, returns appropriate error response.
+
+ *  next - The next middleware function.
+ */
+exports.isAuthenticated = async (req, res, next) => {
+    // Extract token from Authorization header
+    // const token = req.headers.authorization?.split(" ")[1];
+    const {token} = req.cookies; // Alternative: Extract token from cookies
     
-        let user = await User.findOne({email});
-
-        if (!user) {
-            return res.status(401).json({
-                 success: false,
-                  message: 'Invalid credentials' });
-        }
-
-         // Check if the provided password matches the stored password
-         const isPasswordValid = await user.checkPassword(password);
-         if (!isPasswordValid) {
-             return res.status(401).json({
-                 success: false, 
-                 message: 'Invalid credentials' });
-         }
-
-         req,user = user;
-         await user.save();
-         // Generate JWT token for user authentication
-         res.status(200).json({ 
-            success: true,
-             message: 'Authentication successful',
-            token 
+    // Check if token is missing
+    if (!token) {
+        return res.status(401).json({
+            message: "Please login first"
         });
-        } catch (error) {
-            res.status(500).json({
-                 success: false,
-                  message: error.message || 'Internal server error'
-             });
-        }
-    };
+    }
+
+    try {
+        // Verify token validity and decode user ID
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+        // Fetch user data based on decoded user ID
+        req.user = await User.findById(decoded._id);
+        // Proceed to next middleware
+        next();
+    } catch (error) {
+        // Handle invalid token
+        return res.status(403).json({
+            success: false,
+            message: 'Invalid token'
+        });
+    }
+}

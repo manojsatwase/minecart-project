@@ -1,14 +1,18 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoutes";
+import Cookies from 'js-cookie';
 
 import Loading from './components/Loading'; // Import your loading indicator component
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Error from "./pages/Error";
-// import Product from "../../backend/models/Product";
+
+import ProtectedRoute from "./utils/ProtectedRoutes";
 
 import "./styles/app.scss";
+import { useDispatch } from "react-redux";
+import { loadUserAPI } from "./api/userApiCall";
+
 
 const Home = lazy(() => import('./pages/Home'));
 const Search = lazy(() => import('./pages/Search'));
@@ -34,8 +38,17 @@ const TransactionManagement = lazy(
   () => import("./pages/admin/management/Transactionmanagement")
 );
 
-
 const AppLayout = () => {
+  const dispatch = useDispatch();
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const authToken = Cookies.get('auth_token');
+      if (authToken) {
+        console.log(authToken);
+        setToken(authToken)
+        dispatch(loadUserAPI());
+      }
+  }, [dispatch]);
   return (
     <>
     <Header/>
@@ -45,15 +58,14 @@ const AppLayout = () => {
   );
 };
 
-const LazyLoadingComponent = ({ component: LazyComponent }) => {
+const LazyLoadingComponent = function ({ component: LazyComponent }) {
   return (
-    <Suspense fallback={<Loading isLoading={true}/> } >
+    <Suspense fallback={<Loading/> } >
       <LazyComponent />
     </Suspense> 
   );
 }
 
-export default LazyLoadingComponent;
 
 export const appRouter = createBrowserRouter([
   {
@@ -65,6 +77,9 @@ export const appRouter = createBrowserRouter([
         path: "/",
         element: <LazyLoadingComponent component={Home} />
        },{
+        path:"/products",
+        element:<LazyLoadingComponent component={Products} />
+      },{
         path: "/products/:id",
         element: <LazyLoadingComponent component={Product} />
        },

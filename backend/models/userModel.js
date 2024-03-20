@@ -22,9 +22,10 @@ const userSchema = new mongoose.Schema({
         enum: ['Admin', 'Customer', 'Owner'],
         default: 'Customer',
       },
-      avatar: {
-        type: String,
-      },
+      avatar:{
+        public_id:String,
+        url:String
+    },
       isOwner: {
         type: Boolean,
         default: false,
@@ -52,11 +53,11 @@ userSchema.pre("save", async function (next) {
 
 
 userSchema.methods.generateAuthToken = async function () {
-   const token = await jwt.sign({ _id: this._id }, process.env.SECRETE_KEY, { expiresIn: '1day' });
+   const token = await jwt.sign({ _id: this._id }, process.env.JWT_SECRET, { expiresIn: '1day' });
    return token;
 };
 
-userSchema.methods.checkPassword = async function (password) {
+userSchema.methods.matchPassword = async function (password) {
    try {
        const isMatch = await bcrypt.compare(password, this.password);
        return isMatch;
