@@ -6,7 +6,7 @@ import { capitalize,PICS} from '../utils/capitalize';
 import { logoutUserAPI } from '../api/userApiCall';
 import {useAlert} from "react-alert";
 import { clearErrors, clearMessage } from '../redux/slices/userSlice';
-import Loading from './Loading';
+import LoadingSpinner from './LoadingSpinner';
 
 const Header = () => {
   const [searchText,setSearchText] = useState('');
@@ -47,7 +47,8 @@ const Header = () => {
       // dispatch(createProducts());
     },[dispatch]);
   
-    if(loading) return <Loading />
+    if(loading) return <LoadingSpinner size="2rem" className="custom-spinner" />
+
 
     return (
       <Navbar expand="lg" bg="primary" variant='dark' className="bg-body-tertiary">

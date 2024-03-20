@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect } from "react";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Cookies from 'js-cookie';
 
-import Loading from './components/Loading'; // Import your loading indicator component
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Error from "./pages/Error";
@@ -12,6 +11,7 @@ import ProtectedRoute from "./utils/ProtectedRoutes";
 import "./styles/app.scss";
 import { useDispatch } from "react-redux";
 import { loadUserAPI } from "./api/userApiCall";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 
 const Home = lazy(() => import('./pages/Home'));
@@ -59,7 +59,7 @@ const AppLayout = () => {
 
 const LazyLoadingComponent = function ({ component: LazyComponent }) {
   return (
-    <Suspense fallback={<Loading/> } >
+    <Suspense fallback={<LoadingSpinner/> } >
       <LazyComponent />
     </Suspense> 
   );
